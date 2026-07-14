@@ -48,9 +48,10 @@
     participants, and groups you record. Shared, by design, with the people in each
     entry or group.</li>
     <li><strong>Receipt photos</strong> — when you scan a receipt, the photo is sent
-    securely to Anthropic's Claude API to read the merchant, items, and totals. The
-    parsed text is saved with the expense; <strong>the photo itself is not stored</strong>
-    by The Tab after processing. Anthropic does not train models on this API data.</li>
+    securely to Anthropic's Claude API to read the merchant, items, and totals.
+    A compressed copy of the photo is stored with the expense so everyone in the
+    split can view the original; it is deleted along with the expense or your
+    account. Anthropic does not train models on this API data.</li>
     <li><strong>Push token</strong> — a device identifier used only to deliver
     notifications (new expenses, settle-up requests, reminders). Stored privately;
     other users can never read it.</li>

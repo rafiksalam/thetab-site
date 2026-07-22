@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join me on The Tab</title>
+<meta property="og:title" content="Join me on The Tab">
+<meta property="og:description" content="Split bills, scan receipts, and settle up with friends.">
+<style>
+  :root { --paper:#FBF9F3; --ground:#E7E3D7; --ink:#22201B; --muted:#6E6960; --red:#C03B2E; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+         font-family: Charter, Georgia, 'Times New Roman', serif; line-height:1.6;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .paper { max-width:420px; width:100%; background:var(--paper);
+           padding:36px 28px 28px; box-shadow:0 2px 14px rgba(34,32,27,.15); }
+  h1 { font-family:'Courier New', monospace; font-size:24px; letter-spacing:.28em;
+       text-transform:uppercase; text-align:center; margin:0 0 4px; }
+  .sub { font-family:'Courier New', monospace; font-size:12px; letter-spacing:.2em;
+         color:var(--muted); text-align:center; text-transform:uppercase; margin-bottom:20px; }
+  hr { border:none; border-top:2px dashed rgba(34,32,27,.25); margin:20px 0; }
+  p { font-size:16px; color:#403C33; text-align:center; margin:12px 0; }
+  .invite { font-size:17px; }
+  .invite strong { font-family:'Courier New', monospace; letter-spacing:.04em; }
+  .btn { display:block; text-align:center; text-decoration:none;
+         font-family:'Courier New', monospace; font-size:14px; letter-spacing:.14em;
+         text-transform:uppercase; background:var(--ink); color:var(--paper);
+         padding:15px 20px; margin:20px 0 8px; }
+  .hint { font-size:13px; color:var(--muted); }
+  .add { font-family:'Courier New', monospace; font-size:15px; letter-spacing:.04em;
+         color:var(--ink); background:rgba(34,32,27,.06); padding:10px 12px; display:inline-block; }
+  .foot { text-align:center; font-family:'Courier New', monospace; font-size:11px;
+          letter-spacing:.2em; color:var(--muted); margin-top:24px; }
+</style>
+</head>
+<body>
+<div class="paper">
+  <h1>The Tab</h1>
+  <div class="sub">* You're invited *</div>
+
+  <p class="invite" id="invite">A friend wants to split the tab with you.</p>
+
+  <p>The Tab is a bill-splitting app for iPhone — log shared expenses, scan receipts,
+  split fairly, and settle up.</p>
+
+  <a class="btn" id="store" href="https://apps.apple.com/app/id6788280070">Get it on the App Store</a>
+  <p class="hint" id="hint">Opens the App Store on your iPhone.</p>
+
+  <hr>
+
+  <p class="hint">Once you're in, add your friend:</p>
+  <p><span class="add" id="add">open the app to connect</span></p>
+
+  <div class="foot">*** SPLIT FAIR. SETTLE UP. ***</div>
+</div>
+
+<script>
+  (function () {
+    var APP_STORE = 'https://apps.apple.com/app/id6788280070';
+    var params = new URLSearchParams(location.search);
+    var u = (params.get('u') || '').replace(/[^a-z0-9_]/gi, '').slice(0, 20);
+
+    if (u) {
+      document.getElementById('invite').innerHTML =
+        '<strong>@' + u + '</strong> wants to split the tab with you.';
+      document.getElementById('add').textContent = '@' + u;
+    }
+
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/.test(ua)
+      || (/Mac/.test(ua) && 'ontouchend' in document); // iPadOS reports as Mac
+    var isAndroid = /Android/.test(ua);
+
+    if (isIOS) {
+      // Give the card a beat to render, then send them to the store.
+      setTimeout(function () { location.href = APP_STORE; }, 700);
+    } else if (isAndroid) {
+      document.getElementById('store').style.display = 'none';
+      document.getElementById('hint').textContent =
+        'The Tab is on iPhone for now — Android is coming. Ask your friend to add you once you join.';
+    } else {
+      document.getElementById('hint').textContent =
+        'The Tab is an iPhone app — open this link on your iPhone to download it.';
+    }
+  })();
+</script>
+</body>
+</html>
